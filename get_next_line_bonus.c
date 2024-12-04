@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmarck <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 11:41:17 by lmarck            #+#    #+#             */
-/*   Updated: 2024/12/04 14:59:43 by lmarck           ###   ########.fr       */
+/*   Created: 2024/12/04 11:53:11 by lmarck            #+#    #+#             */
+/*   Updated: 2024/12/04 17:18:35 by lmarck           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE + 1];
+	static char	buf[1024][BUFFER_SIZE + 1];
 	char		*str;
 	char		*tmp;
 
@@ -24,13 +24,13 @@ char	*get_next_line(int fd)
 	str = ft_calloc(1, sizeof(char));
 	if (!str)
 		return (NULL);
-	if (!ft_strchr(buf, '\n'))
+	if (!ft_strchr(buf[fd], '\n'))
 	{
 		free(str);
-		str = new_read(buf, fd, 1, tmp);
+		str = new_read(buf[fd], fd, 1, tmp);
 	}
 	else
-		str = ft_join(buf, str);
+		str = ft_join(buf[fd], str);
 	if (!str || !str[0])
 		return (free(str), NULL);
 	return (str);
